@@ -14,7 +14,7 @@ telegram_token = os.environ['telegramtoken']
 telegram_chat_id = os.environ['telegramchatid']
 
 state = 0
-streamers = ['bananaslamjamma', 'gunnardota2', 'monkeys_forever', 'xcaliburye', 'gorgc']
+streamers = ['bananaslamjamma', 'gunnardota2', 'monkeys_forever', 'xcaliburye', 'gorgc', 'purgegamers']
 
 streamerstate = {}
 
