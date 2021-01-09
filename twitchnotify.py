@@ -22,16 +22,17 @@ while True:
     #data = twitch.get_streams(user_login=['bananaslamjamma'])
     data = twitch.get_streams(user_login=['xcaliburye'])
     if data['data']:
+        streamer = data['data'][0]['user_name']
         game_id = data['data'][0]['game_id']
         game_name = data['data'][0]['game_name']
         stream_title = data['data'][0]['title']
         viewers = data['data'][0]['viewer_count']
         check_game(game_id, game_name)
         if check_game and state == 0:
-            bot("!!BSJ is streaming {} \nStream Title: {}\nViewers: {}".format(game_name, stream_title, viewers),
+            bot("{} is now live {} \nStream Title: {}\nViewers: {}".format(streamer, game_name, stream_title, viewers),
                 telegram_chat_id, telegram_token)
             state = 1
-            pprint("BSJ is streaming {} Stream Title: {}".format(game_name, stream_title))
+            pprint("{} is now live {} Stream Title: {}".format(streamer, game_name, stream_title))
         else:
             pass
     else:
