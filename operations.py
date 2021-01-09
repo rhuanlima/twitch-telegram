@@ -16,7 +16,7 @@ def send_telegram_photo(msg, chat_id, token):
 
     bot = telegram.Bot(token=token)
     bot.send_photo(chat_id=chat_id, caption=msg,
-                   photo="https://static-cdn.jtvnw.net/previews-ttv/live_user_bananaslamjamma-1280x720.jpg")
+                   photo="https://static-cdn.jtvnw.net/jtv_user_pictures/bananaslamjamma-profile_image-8a07eac563581ffe-70x70.png")
 
 
 def send_telegram_message(msg, chat_id, token):
