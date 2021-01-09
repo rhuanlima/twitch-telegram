@@ -9,7 +9,7 @@ def check_game(game_id, game_name):
         pass
 
 
-def send_telegram_photo(msg, chat_id, token, streamername):
+def send_telegram_photo(msg, chat_id, token, photo_url):
     """
 	Send a mensage to a telegram user specified on chatId
 	chat_id must be a number!
@@ -17,8 +17,8 @@ def send_telegram_photo(msg, chat_id, token, streamername):
 
     bot = telegram.Bot(token=token)
     bot.send_photo(chat_id=chat_id, caption=msg,
-                   photo="https://static-cdn.jtvnw.net/previews-ttv/live_user_{}-720x480.jpg"
-                   .format(streamername))
+                   photo=photo_url
+                   )
 
 
 def send_telegram_message(msg, chat_id, token):
