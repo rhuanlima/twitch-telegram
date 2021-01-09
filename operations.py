@@ -1,5 +1,6 @@
 import telegram
-
+from string import Formatter
+from datetime import timedelta
 
 def check_game(game_id, game_name):
     if game_id == '29595' or game_name == "Dota 2":

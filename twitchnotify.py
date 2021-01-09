@@ -1,8 +1,12 @@
-from twitchAPI.twitch import Twitch
-from pprint import pprint
-import time
-import operations
 import os
+import time
+import datetime
+import humanize
+from pprint import pprint
+
+from twitchAPI.twitch import Twitch
+
+import operations
 
 ClientID = os.environ['clientid']
 ClientSecret = os.environ['clientsecret']
@@ -29,8 +33,11 @@ while True:
         stream_title = data['data'][0]['title']
         viewers = data['data'][0]['viewer_count']
         check_game(game_id, game_name)
+        stream_start_time = datetime.datetime.strptime(data['data'][0]['started_at'], '%Y-%m-%dT%H:%M:%SZ')
+        time_now = datetime.datetime.utcnow()
+        uptime = humanize.precisedelta(time_now - stream_start_time, minimum_unit='seconds')
         if check_game and state == 0:
-            bot("{} is now live {} \nStream Title: {}\nViewers: {}".format(streamer, game_name, stream_title, viewers),
+            bot("{} is now live {} \nStream Title: {}\nViewers: {}\nUptime: {} ".format(streamer, game_name, stream_title, viewers, uptime),
                 telegram_chat_id, telegram_token, streamername)
             state = 1
             pprint("{} is now live {} Stream Title: {}".format(streamer, game_name, stream_title))
