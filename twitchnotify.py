@@ -19,8 +19,8 @@ twitch = Twitch(ClientID, ClientSecret)
 while True:
 
     twitch.authenticate_app([])
-    data = twitch.get_streams(user_login=['bananaslamjamma'])
-    #data = twitch.get_streams(user_login=['qojqva'])
+    #data = twitch.get_streams(user_login=['bananaslamjamma'])
+    data = twitch.get_streams(user_login=['lukiluki'])
     if data['data']:
         game_id = data['data'][0]['game_id']
         game_name = data['data'][0]['game_name']
