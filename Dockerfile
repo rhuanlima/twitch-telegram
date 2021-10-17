@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "./twitchnotify.py" ]
+CMD [ "python", "./app.py" ]

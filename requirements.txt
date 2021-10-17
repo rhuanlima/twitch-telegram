@@ -1,3 +1,4 @@
 twitchAPI
 python-telegram-bot
 humanize
+tzlocal ~= 2.0
