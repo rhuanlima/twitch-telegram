@@ -241,3 +241,5 @@ pip-selfcheck.json
 # End of https://www.toptal.com/developers/gitignore/api/flask,python,visualstudiocode,venv
 Dockerfile
 .vscode/settings.json
+bash_run.sh
+lives.db
