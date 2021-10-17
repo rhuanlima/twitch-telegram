@@ -1,14 +1,18 @@
 import os
 import datetime
 import humanize
+
 from twitchAPI.twitch import Twitch
 import telegram
 import sqlite3
 from apscheduler.schedulers.blocking import BlockingScheduler
 import requests
 from bs4 import BeautifulSoup
+
 from dotenv import load_dotenv
-load_dotenv('./.env')
+
+load_dotenv("./.env")
+
 
 class Live:
     def __init__(self, nome):
@@ -24,25 +28,6 @@ class Live:
         twitch.authenticate_app([])
         data_streams = twitch.get_streams(user_login=[self.nome])
         return data_streams
-
-    def check_live(self):
-        data_streams = self._check_live()
-        print("check")
-        if data_streams["data"]:
-            self.live_id = data_streams["data"][0]["id"]
-            self.live_photo_url = f"https://static-cdn.jtvnw.net/previews-ttv/live_user_{self.nome}-720x480.jpg"
-            self.live_photo_msg = data_streams["data"][0]["title"]
-            self.live_photo_chat_id = self.telegram_chat_id
-            self.live_photo_token = self.telegram_token
-            stream_start_time = datetime.datetime.strptime(
-                data_streams["data"][0]["started_at"], "%Y-%m-%dT%H:%M:%SZ"
-            )
-            time_now = datetime.datetime.utcnow()
-            self.uptime = humanize.precisedelta(
-                time_now - stream_start_time, minimum_unit="seconds"
-            )
-            self.alert_live_on()
-            self.save_live()
 
     def _get_connection(self):
         conn = sqlite3.connect("lives.db")
@@ -87,6 +72,25 @@ class Live:
         bot = telegram.Bot(token=token)
         bot.sendMessage(chat_id=chat_id, text=msg)
 
+    def check_live(self):
+        data_streams = self._check_live()
+        print("check")
+        if data_streams["data"]:
+            self.live_id = data_streams["data"][0]["id"]
+            self.live_photo_url = f"https://static-cdn.jtvnw.net/previews-ttv/live_user_{self.nome}-720x480.jpg"
+            self.live_photo_msg = data_streams["data"][0]["title"]
+            self.live_photo_chat_id = self.telegram_chat_id
+            self.live_photo_token = self.telegram_token
+            stream_start_time = datetime.datetime.strptime(
+                data_streams["data"][0]["started_at"], "%Y-%m-%dT%H:%M:%SZ"
+            )
+            time_now = datetime.datetime.utcnow()
+            self.uptime = humanize.precisedelta(
+                time_now - stream_start_time, minimum_unit="seconds"
+            )
+            self.alert_live_on()
+            self.save_live()
+
     def alert_live_on(self):
         conn, cursor = self._get_connection()
         last_live = self._get_last_live(conn, cursor)
@@ -115,6 +119,6 @@ class Live:
 
 
 live = Live(os.getenv("nome"))
-scheduler = BlockingScheduler()
+scheduler = BlockingScheduler({"apscheduler.job_defaults.max_instances": 2})
 scheduler.add_job(live.check_live, "interval", seconds=10)
 scheduler.start()
