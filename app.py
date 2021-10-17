@@ -1,11 +1,9 @@
 import os
 import datetime
 import humanize
-
 from twitchAPI.twitch import Twitch
 import telegram
 import sqlite3
-from apscheduler.schedulers.blocking import BlockingScheduler
 import requests
 from bs4 import BeautifulSoup
 
@@ -119,6 +117,4 @@ class Live:
 
 
 live = Live(os.getenv("nome"))
-scheduler = BlockingScheduler({"apscheduler.job_defaults.max_instances": 2})
-scheduler.add_job(live.check_live, "interval", seconds=10)
-scheduler.start()
+live.check_live()
