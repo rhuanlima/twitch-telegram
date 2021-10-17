@@ -7,7 +7,8 @@ import sqlite3
 from apscheduler.schedulers.blocking import BlockingScheduler
 import requests
 from bs4 import BeautifulSoup
-
+from dotenv import load_dotenv
+load_dotenv('./.env')
 
 class Live:
     def __init__(self, nome):
